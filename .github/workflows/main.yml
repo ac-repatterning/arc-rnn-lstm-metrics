@@ -14,7 +14,7 @@ jobs:
       max-parallel: 4
       fail-fast: false
       matrix:
-        python-version: ['3.13']
+        python-version: ['3.12']
 
     permissions:
       contents: read
@@ -54,9 +54,6 @@ jobs:
           printf "\n src/functions "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/functions
           
-          printf "\n src/predictions "
-          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/predictions
-          
           printf "\n src/preface "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/preface
           
@@ -79,9 +76,6 @@ jobs:
           
           printf "\n src/functions "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/functions
-          
-          printf "\n src/predictions "
-          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/predictions
           
           printf "\n src/preface "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/preface
@@ -107,9 +101,6 @@ jobs:
           
           printf "\n Package src/functions"
           pylint --rcfile .pylintrc src/functions
-          
-          printf "\n Package src/predictions"
-          pylint --rcfile .pylintrc src/predictions
           
           printf "\n Package src/preface"
           pylint --rcfile .pylintrc src/preface
