@@ -45,7 +45,7 @@ class Interface:
         for specification in specifications:
             master: mr.Master = __get_data(specification=specification)
             structures: st.Structures = __get_errors(master=master)
-            metrics = __get_metrics(structures=structures)
+            metrics = __get_metrics(structures=structures, specification=specification)
             computations.append(metrics)
 
         estimates = dask.compute(computations, scheduler='threads')[0]
