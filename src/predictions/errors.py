@@ -1,8 +1,9 @@
 """Module errors.py"""
+import logging
 
-import numpy as np
 import pandas as pd
 
+import src.elements.master as mr
 import src.elements.structures as st
 
 
@@ -22,26 +23,23 @@ class Errors:
         :return:
         """
 
-        # The error with respect to the median, for overarching error calculations
-        data.loc[:, 'error'] = data['median'] - data['observation']
+        frame = data.copy()[['measure', 'e_measure']]
+        frame = frame.assign(a_error=(frame['measure'] - frame['e_measure']).abs())
+        frame.loc[:, 'a_error_percentage'] = 100 * frame['a_error'].divide(frame['measure']).values
 
-        # Calculating error percentages
-        estimates = data[['median', 'lower_w', 'upper_w', 'lower_q', 'upper_q']].to_numpy()
-        raw = estimates - data['observation'].to_numpy()[:,None]
-        percentages = 100*np.true_divide(raw, data['observation'].to_numpy()[:,None])
-        data.loc[:, ['p_error', 'p_e_lower_w', 'p_e_upper_w', 'p_e_lower_q', 'p_e_upper_q']] = percentages
+        logging.info(frame)
 
-        return data
+        return frame
 
-    def exc(self, structures: st.Structures):
+    def exc(self, master: mr.Master) -> st.Structures:
         """
 
-        :param structures: Refer to src/elements/structures.py
+        :param master: Refer to src/elements/master.py
         :return:
         """
 
-        structures = structures._replace(
-            training=self.__get_errors(data=structures.training),
-            testing=self.__get_errors(data=structures.testing))
+        structures = st.Structures(
+            training=self.__get_errors(data=master.e_training),
+            testing=self.__get_errors(data=master.e_testing))
 
         return structures
