@@ -1,16 +1,16 @@
 """Module interface.py"""
 import logging
-import os
+
 import pandas as pd
 
+import src.data.cases
 import src.data.codes
-import src.data.reference
 import src.data.menu
+import src.data.reference
+import src.data.specifications
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.elements.specification as sc
-import src.data.specifications
-import src.data.cases
 
 
 class Interface:
