@@ -33,7 +33,7 @@ class Interface:
     def exc(specifications: list[sc.Specification]):
         """
 
-        :param specifications:
+        :param specifications: An inventory
         :return:
         """
 
@@ -50,3 +50,6 @@ class Interface:
 
         estimates = dask.compute(computations, scheduler='threads')[0]
         logging.info(estimates)
+
+        elements = sum(estimates, [])
+        logging.info(elements)
