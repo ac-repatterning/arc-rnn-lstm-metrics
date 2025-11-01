@@ -34,20 +34,18 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self):
+    def exc(self) -> list[sc.Specification]:
         """
 
         :return:
         """
 
         cases = src.data.cases.Cases(service=self.__service, s3_parameters=self.__s3_parameters).exc()
-        self.__logger.info(cases)
 
         # Reference
         reference: pd.DataFrame = src.data.reference.Reference(
             s3_parameters=self.__s3_parameters).exc(codes=cases['ts_id'].unique())
         reference = reference.copy().merge(cases, how='left', on=['catchment_id', 'ts_id'])
-        self.__logger.info(reference)
 
         # Menu
         src.data.menu.Menu().exc(reference=reference)
@@ -55,3 +53,5 @@ class Interface:
         # Specifications
         specifications: list[sc.Specification] = src.data.specifications.Specifications().exc(reference=reference)
         self.__logger.info(specifications)
+
+        return specifications
