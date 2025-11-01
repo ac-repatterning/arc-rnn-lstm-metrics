@@ -1,4 +1,6 @@
+"""Module cases.py"""
 import os
+
 import numpy as np
 import pandas as pd
 
@@ -7,8 +9,8 @@ import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.s3.prefix
 
-class Cases:
 
+class Cases:
     """
     Retrieves the catchment & time series codes of the gauges in focus.
     """
@@ -40,7 +42,7 @@ class Cases:
 
         # A set of S3 uniform resource locators
         values = pd.DataFrame(data={'uri': objects})
-        values = values.assign(uri=values['uri'].apply(lambda x: os.path.dirname(x)))
+        values = values.assign(uri=values['uri'].apply(os.path.dirname))
         values.drop_duplicates(inplace=True, ignore_index=True)
 
         # Splitting locators
