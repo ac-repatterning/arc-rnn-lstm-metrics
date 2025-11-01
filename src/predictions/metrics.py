@@ -8,6 +8,7 @@ import pandas as pd
 
 import config
 import src.elements.structures as st
+import src.elements.specification as sc
 import src.functions.objects
 
 
@@ -20,10 +21,11 @@ class Metrics:
         pass
 
     @staticmethod
-    def __metrics(data: pd.DataFrame, stage: typing.Literal['training', 'testing']) -> dict:
+    def __metrics(data: pd.DataFrame, specification: sc.Specification, stage: typing.Literal['training', 'testing']) -> dict:
         """
 
         :param data: A frame of measures, estimates, and errors
+        :param specification:
         :param stage: The data of the training or testing stage
         :return:
         """
@@ -34,14 +36,17 @@ class Metrics:
         return {'rmse': float(_r_mse),
                 'mape': float(data['ape'].mean()),
                 'mae': float(data['ae'].mean()),
+                'catchment_id': specification.catchment_id,
+                'ts_id': specification.ts_id,
                 'stage': stage}
 
-    def exc(self, structures: st.Structures) -> list[dict]:
+    def exc(self, structures: st.Structures, specification: sc.Specification) -> list[dict]:
         """
 
         :param structures: An object of data frames vis-à-vis training & testing estimates, etc.
+        :param specification:
         :return:
         """
 
-        return [self.__metrics(data=structures.training, stage='training'),
-                self.__metrics(data=structures.training, stage='testing')]
+        return [self.__metrics(data=structures.training, specification=specification, stage='training'),
+                self.__metrics(data=structures.training, specification=specification, stage='testing')]
