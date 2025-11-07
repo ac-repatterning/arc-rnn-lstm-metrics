@@ -27,11 +27,15 @@ class Metrics:
         """
 
         _se: np.ndarray = np.power(data['ae'].to_numpy(), 2)
-        _r_mse: float = np.sqrt(_se.mean())
+        _r_mean_se: float = np.sqrt(_se.mean())
+        _r_median_se: float = np.sqrt(np.median(_se))
 
-        return {'rmse': float(_r_mse),
-                'mape': float(data['ape'].mean()),
-                'mae': float(data['ae'].mean()),
+        return {'r_mean_se': float(_r_mean_se),
+                'r_median_se': float(_r_median_se),
+                'mean_ape': float(data['ape'].mean()),
+                'median_ape': float(data['ape'].median()),
+                'mean_ae': float(data['ae'].mean()),
+                'median_ae': float(data['ae'].median()),
                 'catchment_id': specification.catchment_id,
                 'ts_id': specification.ts_id,
                 'stage': stage}
