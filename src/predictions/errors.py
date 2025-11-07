@@ -1,5 +1,5 @@
 """Module errors.py"""
-
+import logging
 import numpy as np
 import pandas as pd
 
@@ -63,5 +63,8 @@ class Errors:
             q_training=self.__get_quantiles(vector=training['ape'].values),
             q_testing=self.__get_quantiles(vector=testing['ape'].values)
         )
+
+        logging.info(structures.testing)
+        logging.info(structures.q_testing)
 
         return structures
