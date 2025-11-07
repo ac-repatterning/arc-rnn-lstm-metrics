@@ -4,7 +4,6 @@ import logging
 import pandas as pd
 
 import src.data.cases
-import src.data.codes
 import src.data.menu
 import src.data.reference
 import src.data.specifications
