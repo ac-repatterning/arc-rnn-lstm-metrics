@@ -1,6 +1,7 @@
 """Module errors.py"""
 import logging
 
+import numpy as np
 import pandas as pd
 
 import src.elements.master as mr
@@ -13,7 +14,12 @@ class Errors:
     """
 
     def __init__(self):
-        pass
+        """
+        Constructor
+        """
+
+        # Quantile points
+        self.__q_points = {0.10: 'l_whisker', 0.25: 'l_quartile', 0.50: 'median', 0.75: 'u_quartile', 0.90: 'u_whisker'}
 
     @staticmethod
     def __get_errors(data: pd.DataFrame) -> pd.DataFrame:
@@ -31,6 +37,11 @@ class Errors:
 
         return frame
 
+    def __get_quantiles(self, vector: np.ndarray):
+
+        quantiles = np.quantile(a=vector, q=list(self.__q_points.keys()), method='inverted_cdf')
+        logging.info(quantiles)
+
     def exc(self, master: mr.Master) -> st.Structures:
         """
 
@@ -41,5 +52,7 @@ class Errors:
         structures = st.Structures(
             training=self.__get_errors(data=master.e_training),
             testing=self.__get_errors(data=master.e_testing))
+
+        self.__get_quantiles(vector=structures.training['ape'].values)
 
         return structures
