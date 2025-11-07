@@ -9,7 +9,8 @@ import src.elements.structures as st
 
 class Errors:
     """
-    Errors
+    Calculates error measures & metrics, vis-à-vis predictions, (a) per instance of a gauge's data
+    instances, and (b) across the instances of a gauge.
     """
 
     def __init__(self):
