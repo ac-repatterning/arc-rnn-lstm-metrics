@@ -29,7 +29,7 @@ class Errors:
         :return:
         """
 
-        frame = data.copy()[['measure', 'e_measure']]
+        frame = data.copy()[['timestamp', 'measure', 'e_measure']]
         frame = frame.assign(ae=(frame['measure'] - frame['e_measure']).abs())
         frame.loc[:, 'ape'] = 100 * frame['ae'].divide(frame['measure']).values
 
