@@ -49,4 +49,4 @@ class Metrics:
         """
 
         return [self.__metrics(data=structures.training, specification=specification, stage='training'),
-                self.__metrics(data=structures.training, specification=specification, stage='testing')]
+                self.__metrics(data=structures.testing, specification=specification, stage='testing')]
