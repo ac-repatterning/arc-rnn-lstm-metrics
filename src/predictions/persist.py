@@ -67,5 +67,21 @@ class Persist:
 
         return self.__persist(nodes=nodes, path=path)
 
-    def aggregates(self):
-        pass
+    def aggregates(self, frame: pd.DataFrame):
+        """
+
+        :param frame:
+        :return:
+        """
+
+        nodes = {}
+        for stage in ['training', 'testing']:
+
+            data: pd.DataFrame = frame.copy().loc[frame['stage'] == stage, :]
+            data.drop(columns='stage', inplace=True)
+            node = self.__get_node(blob=data)
+            nodes[stage] = node
+
+        path = os.path.join(self.__configurations.aggregates_, 'aggregates.json')
+
+        return self.__persist(nodes=nodes, path=path)
