@@ -70,9 +70,7 @@ class Errors:
             q_testing=self.__get_quantiles(vector=testing['ape'].values)
         )
 
-        logging.info(structures.testing)
-        logging.info(structures.q_testing)
-
-        self.__persist.disaggregates(specification=specification, structures=structures)
+        message = self.__persist.disaggregates(specification=specification, structures=structures)
+        logging.info(message)
 
         return structures
