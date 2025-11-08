@@ -11,6 +11,7 @@ import src.functions.directories
 import src.predictions.data
 import src.predictions.errors
 import src.predictions.metrics
+import src.predictions.persist
 
 
 class Interface:
@@ -44,3 +45,6 @@ class Interface:
         __metrics: list[dict] = sum(elements, [])
         aggregates = pd.DataFrame.from_records(data=__metrics)
         logging.info(aggregates)
+
+        message = src.predictions.persist.Persist().aggregates(frame=aggregates)
+        logging.info(message)
