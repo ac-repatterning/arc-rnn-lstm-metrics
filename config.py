@@ -38,7 +38,7 @@ class Config:
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
-        self.pathway_ = os.path.join(self.warehouse, self.architecture)
+        self.pathway_ = os.path.join(self.warehouse, 'arc-rnn-lstm-metrics')
         self.points_ = os.path.join(self.pathway_, 'disaggregates', 'points')
         self.menu_ = os.path.join(self.pathway_, 'disaggregates', 'menu')
         self.aggregates_ = os.path.join(self.pathway_, 'aggregates')
@@ -47,7 +47,7 @@ class Config:
         '''
         Cloud Prefix: Destination
         '''
-        self.prefix = f'warehouse/{self.architecture}'
+        self.prefix = 'warehouse/arc-rnn-lstm-metrics'
 
 
         '''
