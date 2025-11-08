@@ -37,7 +37,7 @@ class Interface:
         computations = []
         for specification in specifications:
             master: mr.Master = __get_data(specification=specification)
-            structures: st.Structures = __get_errors(master=master)
+            structures: st.Structures = __get_errors(master=master, specification=specification)
             metrics = __get_metrics(structures=structures, specification=specification)
             computations.append(metrics)
 
