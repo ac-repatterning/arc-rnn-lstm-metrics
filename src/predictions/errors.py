@@ -1,11 +1,12 @@
 """Module errors.py"""
 import logging
+
 import numpy as np
 import pandas as pd
 
 import src.elements.master as mr
-import src.elements.structures as st
 import src.elements.specification as sc
+import src.elements.structures as st
 import src.predictions.persist
 
 
