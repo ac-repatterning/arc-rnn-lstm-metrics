@@ -1,4 +1,4 @@
-
+import logging
 import json
 
 import pandas as pd
@@ -51,7 +51,7 @@ class Sections:
 
         # Therefore ...
         codes = baseline['catchment_id'].to_numpy()
-
         computation = [self.__get_disaggregate(catchment_id=code) for code in codes]
+        logging.info(computation)
 
         return computation
