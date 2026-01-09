@@ -1,4 +1,4 @@
-name: 'Hydrography: Evaluating github.com/repatterning/arc-rnn-lstm'
+name: 'Hydrography: Error metrics ↠ github.com/repatterning/arc-rnn-lstm'
 
 on: [push]
 
