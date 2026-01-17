@@ -1,3 +1,4 @@
+"""Module statements.py"""
 import typing
 
 import numpy as np
@@ -8,6 +9,9 @@ import src.elements.structures as st
 
 
 class Statements:
+    """
+    This class outlines errors vis-à-vis a gauge station's river level prediction/forecasting model.
+    """
 
     def __init__(self):
         pass
@@ -16,7 +20,7 @@ class Statements:
     def __get_values(errors: pd.DataFrame, quantiles: pd.DataFrame, specification: sc.Specification,
                      stage: typing.Literal['training', 'testing']) -> dict:
         """
-        
+
         :param errors:
         :param quantiles:
         :param specification:
