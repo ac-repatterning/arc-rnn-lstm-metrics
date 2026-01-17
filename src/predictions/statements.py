@@ -14,7 +14,15 @@ class Statements:
 
     @staticmethod
     def __get_values(errors: pd.DataFrame, quantiles: pd.DataFrame, specification: sc.Specification,
-                     stage: typing.Literal['training', 'testing']):
+                     stage: typing.Literal['training', 'testing']) -> dict:
+        """
+        
+        :param errors:
+        :param quantiles:
+        :param specification:
+        :param stage:
+        :return:
+        """
 
         _se: np.ndarray = np.power(errors['error'].to_numpy(), 2)
         _r_mean_se: float = np.sqrt(_se.mean())
