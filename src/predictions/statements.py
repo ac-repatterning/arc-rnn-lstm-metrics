@@ -22,20 +22,21 @@ class Statements:
 
         _quantiles = quantiles.iloc[0, :].squeeze()
 
-        instance = {'r_mean_se': float(_r_mean_se),
-         'r_median_se': float(_r_median_se),
-         'mean_pe': float(errors['p_error'].mean()),
-         'median_pe': float(errors['p_error'].median()),
-         'mean_e': float(errors['error'].mean()),
-         'median_e': float(errors['error'].median()),
-         'l_whisker': _quantiles.l_whisker,
-         'u_whisker': _quantiles.u_whisker,
-         'catchment_id': specification.catchment_id,
-         'catchment_name': specification.catchment_name,
-         'station_name': specification.station_name,
-         'river_name': specification.river_name,
-         'ts_id': specification.ts_id,
-         'stage': stage}
+        instance = {
+            'r_mean_se': float(_r_mean_se),
+            'r_median_se': float(_r_median_se),
+            'mean_pe': float(errors['p_error'].mean()),
+            'median_pe': float(errors['p_error'].median()),
+            'mean_e': float(errors['error'].mean()),
+            'median_e': float(errors['error'].median()),
+            'l_whisker': _quantiles.l_whisker,
+            'u_whisker': _quantiles.u_whisker,
+            'catchment_id': specification.catchment_id,
+            'catchment_name': specification.catchment_name,
+            'station_name': specification.station_name,
+            'river_name': specification.river_name,
+            'ts_id': specification.ts_id,
+            'stage': stage}
 
         return instance
 
@@ -47,5 +48,8 @@ class Statements:
         :return:
         """
 
-        return [self.__get_values(errors=structures.training, quantiles=structures.q_training, specification=specification, stage='training'),
-                self.__get_values(errors=structures.testing, quantiles=structures.q_testing, specification=specification, stage='testing')]
+        return [
+            self.__get_values(
+                errors=structures.training, quantiles=structures.q_training, specification=specification, stage='training'),
+            self.__get_values(
+                errors=structures.testing, quantiles=structures.q_testing, specification=specification, stage='testing')]
