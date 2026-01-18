@@ -7,13 +7,13 @@ import pandas as pd
 
 class Structure:
     """
-    This class structures metrics data
+    This class structures the metrics data.
     """
 
     def __init__(self, instances: pd.DataFrame):
         """
 
-        :param instances:
+        :param instances: Data instances.
         """
 
         self.__instances = instances
@@ -23,8 +23,8 @@ class Structure:
         """
 
         :param data:
-        :param catchment_id:
-        :param catchment_name:
+        :param catchment_id: The identification code of a catchment area.
+        :param catchment_name: The name of a catchment area.
         :return:
         """
 
@@ -40,7 +40,7 @@ class Structure:
     def __get_data(self, catchment_id: int) -> pd.DataFrame:
         """
 
-        :param catchment_id:
+        :param catchment_id: The identification code of a catchment area.
         :return:
         """
 
