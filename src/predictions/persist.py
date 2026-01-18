@@ -70,6 +70,22 @@ class Persist:
 
         return self.__persist(nodes=nodes, path=path)
 
+    def statements(self, frame: pd.DataFrame) -> str:
+        """
+
+        :param frame:
+        :return:
+        """
+
+        nodes = {}
+        for stage in frame['stage'].unique():
+            blob = frame.copy().loc[frame['stage'] == stage, :]
+            node = self.__get_node(blob=blob)
+            nodes[stage] = node
+        path = os.path.join(self.__configurations.aggregates_, 'statements.json')
+
+        return self.__persist(nodes=nodes, path=path)
+
     def aggregates(self, frame: pd.DataFrame) -> str:
         """
 
