@@ -47,6 +47,8 @@ class Statements:
             'catchment_name': specification.catchment_name,
             'station_name': specification.station_name,
             'river_name': specification.river_name,
+            'latitude': specification.latitude,
+            'longitude': specification.longitude,
             'ts_id': specification.ts_id,
             'stage': stage}
 
