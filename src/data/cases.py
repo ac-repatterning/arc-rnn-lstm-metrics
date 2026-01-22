@@ -1,10 +1,9 @@
 """Module cases.py"""
-import logging
 import os
 
+import dask
 import numpy as np
 import pandas as pd
-import dask
 
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
@@ -78,11 +77,8 @@ class Cases:
         :return:
         """
 
-
         paths = self.__pre.objects(prefix=self.__arguments.get('prefix').get('source'), delimiter='/')
-        logging.info('PATHS\n%s', paths)
         paths = self.__pre.objects(paths[0], delimiter='/')
-        logging.info('PATHS\n%s', paths)
 
         computations = []
         for path in paths:
