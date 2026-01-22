@@ -78,6 +78,7 @@ class Cases:
         :return:
         """
 
+
         paths = self.__pre.objects(prefix=self.__arguments.get('prefix').get('source'), delimiter='/')
         logging.info('PATHS\n%s', paths)
         paths = self.__pre.objects(paths[0], delimiter='/')
@@ -87,10 +88,7 @@ class Cases:
         for path in paths:
             computations.append(self.__get_listings(path=path))
         elements = dask.compute(computations, scheduler='threads')[0]
-        logging.info(elements)
-
         keys: list[str] = sum(elements, [])
-        logging.info(keys)
 
         # ... ensure the core model directory is excluded
         if len(keys) > 0:
