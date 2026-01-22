@@ -1,9 +1,10 @@
 """Module cases.py"""
-
+import logging
 import os
 
 import numpy as np
 import pandas as pd
+import dask
 
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
@@ -60,21 +61,16 @@ class Cases:
 
         return values
 
-    def __get_keys(self) -> list[str]:
+    @dask.delayed
+    def __get_listings(self, path: str) -> list[str]:
         """
 
         :return:
         """
 
-        paths = self.__pre.objects(prefix=self.__arguments.get('prefix').get('source'), delimiter='/')
+        listings = self.__pre.objects(prefix=path, delimiter='')
 
-        computations = []
-        for path in paths:
-            listings = self.__pre.objects(prefix=path, delimiter='')
-            computations.append(listings)
-        keys: list[str] = sum(computations, [])
-
-        return keys
+        return listings
 
     def exc(self) -> pd.DataFrame:
         """
@@ -82,7 +78,19 @@ class Cases:
         :return:
         """
 
-        keys = self.__get_keys()
+        paths = self.__pre.objects(prefix=self.__arguments.get('prefix').get('source'), delimiter='/')
+        logging.info('PATHS\n%s', paths)
+        paths = self.__pre.objects(paths[0], delimiter='/')
+        logging.info('PATHS\n%s', paths)
+
+        computations = []
+        for path in paths:
+            computations.append(self.__get_listings(path=path))
+        elements = dask.compute(computations, scheduler='threads')[0]
+        logging.info(elements)
+
+        keys: list[str] = sum(elements, [])
+        logging.info(keys)
 
         # ... ensure the core model directory is excluded
         if len(keys) > 0:
