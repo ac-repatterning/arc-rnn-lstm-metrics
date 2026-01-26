@@ -36,9 +36,7 @@ class Interface:
         """
 
         key_name = self.__configurations.argument_key
-
         arguments = src.s3.configurations.Configurations(connector=connector).objects(key_name=key_name)
-        arguments['prefix'] = arguments.get('metrics').get('inspect')
 
         return arguments
 
