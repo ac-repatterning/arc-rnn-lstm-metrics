@@ -17,7 +17,6 @@ class Specification(typing.NamedTuple):
     ts_id: int
     ts_name: str
     starting: str
-    until: str
     latitude: float
     longitude: float
     river_name: str
