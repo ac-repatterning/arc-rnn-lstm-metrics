@@ -1,4 +1,5 @@
 """Module statements.py"""
+import logging
 import typing
 
 import numpy as np
@@ -33,16 +34,21 @@ class Statements:
         _r_median_se: float = np.sqrt(np.median(_se))
 
         _quantiles = quantiles.iloc[0, :].squeeze()
+        logging.info(_quantiles)
 
         instance = {
             'r_mean_se': float(_r_mean_se),
             'r_median_se': float(_r_median_se),
             'mean_pe': float(errors['p_error'].mean()),
-            'median_pe': float(errors['p_error'].median()),
             'mean_e': float(errors['error'].mean()),
             'median_e': float(errors['error'].median()),
-            'l_whisker': _quantiles.l_whisker,
-            'u_whisker': _quantiles.u_whisker,
+            'l_whisker_pe_extreme': _quantiles.l_whisker_pe_extreme,
+            'l_whisker_pe': _quantiles.l_whisker_pe,
+            'l_quartile_pe': _quantiles.l_quartile_pe,
+            'median_pe': _quantiles.median_pe,
+            'u_quartile_pe': _quantiles.u_quartile_pe,
+            'u_whisker_pe': _quantiles.u_whisker_pe,
+            'u_whisker_pe_extreme': _quantiles.u_whisker_pe_extreme,
             'catchment_id': specification.catchment_id,
             'catchment_name': specification.catchment_name,
             'station_name': specification.station_name,
