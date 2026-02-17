@@ -48,10 +48,14 @@ class Interface:
         __parts: list[dict] = sum(elements, [])
         frame = pd.DataFrame.from_records(data=__parts)
 
-        # persist: statements
-        message = self.__persist.statements(frame=frame)
+        # persist: aggregates by stage
+        message = self.__persist.aggregates_by_stage(frame=frame)
         logging.info(message)
 
-        # persist: aggregates
-        message = self.__persist.aggregates(frame=frame)
+        # persist: aggregates by stage then catchment
+        message = self.__persist.aggregates_by_stage_and_catchment(frame=frame)
+        logging.info(message)
+
+        # persist: aggregates by catchment then stage
+        message = self.__persist.aggregates_by_catchment_and_stage(frame=frame)
         logging.info(message)
