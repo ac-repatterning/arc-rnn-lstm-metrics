@@ -100,7 +100,7 @@ class Persist:
         nodes = {}
         for catchment_id, catchment_name in zip(catchments['catchment_id'].to_list(), catchments['catchment_name'].to_list()):
             excerpt: pd.DataFrame = frame.copy().loc[frame['catchment_id'] == catchment_id, :]
-            node = src.predictions.stages.Stages(excerpt=excerpt).__call__()
+            node = src.predictions.stages.Stages(excerpt=excerpt)()
             node['catchment_id'] = catchment_id
             node['catchment_name'] = catchment_name
             nodes[int(catchment_id)] = node
