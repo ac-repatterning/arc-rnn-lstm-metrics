@@ -22,8 +22,8 @@ class Errors:
         """
 
         # Quantile points
-        self.__q_points = {0.05: 'l_whisker_e', 0.10: 'l_whisker', 0.25: 'l_quartile', 0.50: 'median',
-                           0.75: 'u_quartile', 0.90: 'u_whisker', 0.95: 'u_whisker_e'}
+        self.__q_points = {0.05: 'l_whisker_pe_extreme', 0.10: 'l_whisker_pe', 0.25: 'l_quartile_pe', 0.50: 'median_pe',
+                           0.75: 'u_quartile_pe', 0.90: 'u_whisker_pe', 0.95: 'u_whisker_pe_extreme'}
 
         # Instances
         self.__persist = src.predictions.persist.Persist()
@@ -42,14 +42,14 @@ class Errors:
 
         return frame
 
-    def __get_quantiles(self, vector: np.ndarray) -> pd.DataFrame:
+    def __get_pe_quantiles(self, p_error: np.ndarray) -> pd.DataFrame:
         """
 
-        :param vector:
+        :param p_error:
         :return:
         """
 
-        quantiles = np.quantile(a=vector, q=list(self.__q_points.keys()), method='inverted_cdf').tolist()
+        quantiles = np.quantile(a=p_error, q=list(self.__q_points.keys()), method='inverted_cdf').tolist()
         frame = pd.DataFrame(data=np.array([quantiles]), columns=list(self.__q_points.values()))
 
         return frame
@@ -68,8 +68,8 @@ class Errors:
         structures = st.Structures(
             training=training,
             testing=testing,
-            q_training=self.__get_quantiles(vector=training['p_error'].values),
-            q_testing=self.__get_quantiles(vector=testing['p_error'].values)
+            q_training=self.__get_pe_quantiles(p_error=training['p_error'].values),
+            q_testing=self.__get_pe_quantiles(p_error=testing['p_error'].values)
         )
 
         message = self.__persist.disaggregates(specification=specification, structures=structures)

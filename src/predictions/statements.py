@@ -32,17 +32,14 @@ class Statements:
         _r_mean_se: float = np.sqrt(_se.mean())
         _r_median_se: float = np.sqrt(np.median(_se))
 
-        _quantiles = quantiles.iloc[0, :].squeeze()
+        _quantiles: pd.Series = quantiles.iloc[0, :].squeeze()
 
         instance = {
             'r_mean_se': float(_r_mean_se),
             'r_median_se': float(_r_median_se),
             'mean_pe': float(errors['p_error'].mean()),
-            'median_pe': float(errors['p_error'].median()),
             'mean_e': float(errors['error'].mean()),
             'median_e': float(errors['error'].median()),
-            'l_whisker': _quantiles.l_whisker,
-            'u_whisker': _quantiles.u_whisker,
             'catchment_id': specification.catchment_id,
             'catchment_name': specification.catchment_name,
             'station_name': specification.station_name,
@@ -51,6 +48,8 @@ class Statements:
             'longitude': specification.longitude,
             'ts_id': specification.ts_id,
             'stage': stage}
+
+        instance.update(_quantiles.to_dict())
 
         return instance
 
