@@ -51,7 +51,23 @@ class Persist:
 
         return json.loads(string)
 
-    def statements(self, frame: pd.DataFrame) -> str:
+    def aggregates_by_stage(self, frame: pd.DataFrame) -> str:
+        """
+
+        :param frame:
+        :return:
+        """
+
+        nodes = {}
+        for stage in frame['stage'].unique():
+            instances: pd.DataFrame = frame.copy().loc[frame['stage'] == stage, :]
+            nodes[stage] = self.__get_node(instances)
+
+        path = os.path.join(self.__configurations.aggregates_, 'by_stage.json')
+
+        return self.__persist(nodes=nodes, path=path)
+
+    def aggregates_by_stage_and_catchment(self, frame: pd.DataFrame) -> str:
         """
 
         :param frame:
@@ -63,7 +79,7 @@ class Persist:
             instances: pd.DataFrame = frame.copy().loc[frame['stage'] == stage, :]
             nodes[stage] = src.predictions.cells.Cells(instances=instances.drop(columns=['stage'])).exc()
 
-        path = os.path.join(self.__configurations.aggregates_, 'statements.json')
+        path = os.path.join(self.__configurations.aggregates_, 'by_stage_and_catchment.json')
 
         return self.__persist(nodes=nodes, path=path)
 
@@ -88,7 +104,7 @@ class Persist:
 
         return self.__persist(nodes=nodes, path=path)
 
-    def aggregates(self, frame: pd.DataFrame) -> str:
+    def aggregates_by_catchment_and_stage(self, frame: pd.DataFrame) -> str:
         """
 
         :param frame:
@@ -104,6 +120,6 @@ class Persist:
             node['catchment_id'] = catchment_id
             node['catchment_name'] = catchment_name
             nodes[int(catchment_id)] = node
-        path = os.path.join(self.__configurations.aggregates_, 'aggregates.json')
+        path = os.path.join(self.__configurations.aggregates_, 'by_catchment_and_stage.json')
 
         return self.__persist(nodes=nodes, path=path)
