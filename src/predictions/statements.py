@@ -33,8 +33,8 @@ class Statements:
         _r_mean_se: float = np.sqrt(_se.mean())
         _r_median_se: float = np.sqrt(np.median(_se))
 
-        _quantiles = quantiles.iloc[0, :].squeeze()
-        logging.info(_quantiles)
+        _quantiles: pd.Series = quantiles.iloc[0, :].squeeze()
+        logging.info(_quantiles.to_dict())
 
         instance = {
             'r_mean_se': float(_r_mean_se),
@@ -42,13 +42,13 @@ class Statements:
             'mean_pe': float(errors['p_error'].mean()),
             'mean_e': float(errors['error'].mean()),
             'median_e': float(errors['error'].median()),
-            'l_whisker_pe_extreme': _quantiles.l_whisker_pe_extreme,
-            'l_whisker_pe': _quantiles.l_whisker_pe,
-            'l_quartile_pe': _quantiles.l_quartile_pe,
-            'median_pe': _quantiles.median_pe,
-            'u_quartile_pe': _quantiles.u_quartile_pe,
-            'u_whisker_pe': _quantiles.u_whisker_pe,
-            'u_whisker_pe_extreme': _quantiles.u_whisker_pe_extreme,
+            # 'l_whisker_pe_extreme': _quantiles.l_whisker_pe_extreme,
+            # 'l_whisker_pe': _quantiles.l_whisker_pe,
+            # 'l_quartile_pe': _quantiles.l_quartile_pe,
+            # 'median_pe': _quantiles.median_pe,
+            # 'u_quartile_pe': _quantiles.u_quartile_pe,
+            # 'u_whisker_pe': _quantiles.u_whisker_pe,
+            # 'u_whisker_pe_extreme': _quantiles.u_whisker_pe_extreme,
             'catchment_id': specification.catchment_id,
             'catchment_name': specification.catchment_name,
             'station_name': specification.station_name,
@@ -57,6 +57,8 @@ class Statements:
             'longitude': specification.longitude,
             'ts_id': specification.ts_id,
             'stage': stage}
+
+        instance.update(_quantiles.to_dict())
 
         return instance
 
