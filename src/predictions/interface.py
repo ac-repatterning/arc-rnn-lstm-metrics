@@ -1,5 +1,4 @@
 """Module src.predictions.interface.py"""
-import logging
 
 import dask
 import pandas as pd
@@ -49,13 +48,10 @@ class Interface:
         frame = pd.DataFrame.from_records(data=__parts)
 
         # persist: aggregates by stage
-        message = self.__persist.aggregates_by_stage(frame=frame)
-        logging.info(message)
+        self.__persist.aggregates_by_stage(frame=frame)
 
         # persist: aggregates by stage then catchment
-        message = self.__persist.aggregates_by_stage_and_catchment(frame=frame)
-        logging.info(message)
+        self.__persist.aggregates_by_stage_and_catchment(frame=frame)
 
         # persist: aggregates by catchment then stage
-        message = self.__persist.aggregates_by_catchment_and_stage(frame=frame)
-        logging.info(message)
+        self.__persist.aggregates_by_catchment_and_stage(frame=frame)
