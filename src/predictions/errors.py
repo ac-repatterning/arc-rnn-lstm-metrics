@@ -52,6 +52,9 @@ class Errors:
         quantiles = np.quantile(a=p_error, q=list(self.__q_points.keys()), method='inverted_cdf').tolist()
         frame = pd.DataFrame(data=np.array([quantiles]), columns=list(self.__q_points.values()))
 
+        # ... extrema
+        frame = frame.assign(minimum_pe=p_error.min(), maximum_pe=p_error.max())
+
         return frame
 
     def exc(self, master: mr.Master, specification: sc.Specification) -> st.Structures:
